@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Save Docker Images
-        run: docker pull --platform amd64 registry.k8s.io/coredns/coredns:v1.11.3 ; docker pull --platform amd64 registry.k8s.io/etcd:3.5.12-0 ; docker pull --platform amd64 registry.k8s.io/pause:3.9 ;docker pull --platform amd64 registry.k8s.io/kube-apiserver:v1.27.13 ;docker pull --platform amd64 registry.k8s.io/kube-scheduler:v1.27.13 ;docker pull --platform amd64 registry.k8s.io/kube-controller-manager:v1.27.13 ;docker pull --platform amd64 registry.k8s.io/kube-proxy:v1.27.13 ;docker save -o k8s-images-1.27.13-amd64.tar.gz registry.k8s.io/coredns/coredns:v1.11.3 registry.k8s.io/etcd:3.5.12-0 registry.k8s.io/pause:3.9 registry.k8s.io/kube-apiserver:v1.27.13 registry.k8s.io/kube-scheduler:v1.27.13 registry.k8s.io/kube-controller-manager:v1.27.13 registry.k8s.io/kube-proxy:v1.27.13
+        run: docker pull --platform arm64 k8s.gcr.io/coredns:1.7.0 ;docker pull --platform arm64 k8s.gcr.io/etcd:3.4.13-0 ;docker pull --platform arm64 k8s.gcr.io/pause:3.2 ;docker pull --platform arm64 k8s.gcr.io/kube-apiserver:v1.20.0 ;docker pull --platform arm64 k8s.gcr.io/kube-scheduler:v1.20.0 ;docker pull --platform arm64 k8s.gcr.io/kube-controller-manager:v1.20.0 ;docker pull --platform arm64 k8s.gcr.io/kube-proxy:v1.20.0 ;docker save -o k8s-images-1.27.13-arm64.tar.gz k8s.gcr.io/coredns:1.7.0 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/pause:3.2 k8s.gcr.io/kube-apiserver:v1.20.0 k8s.gcr.io/kube-scheduler:v1.20.0 k8s.gcr.io/kube-controller-manager:v1.20.0 k8s.gcr.io/kube-proxy:v1.20.0
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: k8s-images-1.27.13-amd64.tar.gz
-          tag_name: k8s-1.27.13-amd64
+          files: k8s-images-1.20.0-arm64.tar.gz
+          tag_name: k8s-1.20.0-arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
