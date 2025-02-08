@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  push_to_registries:
+    name: Push Docker image to multiple registries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save Docker Images
+        run: docker pull --platform arm64 registry.k8s.io/coredns/coredns:v1.11.3 ; docker pull --platform arm64 registry.k8s.io/etcd:3.5.12-0 ; docker pull --platform arm64 registry.k8s.io/pause:3.9 ;docker pull --platform arm64 registry.k8s.io/kube-apiserver:v1.27.13 ;docker pull --platform arm64 registry.k8s.io/kube-scheduler:v1.27.13 ;docker pull --platform arm64 registry.k8s.io/kube-controller-manager:v1.27.13 ;docker pull --platform arm64 registry.k8s.io/kube-proxy:v1.27.13 ;docker save -o k8s-images-1.27.13-arm64.tar.gz registry.k8s.io/coredns/coredns:v1.11.3 registry.k8s.io/etcd:3.5.12-0 registry.k8s.io/pause:3.9 registry.k8s.io/kube-apiserver:v1.27.13 registry.k8s.io/kube-scheduler:v1.27.13 registry.k8s.io/kube-controller-manager:v1.27.13 registry.k8s.io/kube-proxy:v1.27.13
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: k8s-images-1.27.13-arm64.tar.gz
+          tag_name: k8s-1.27.13-arm64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
