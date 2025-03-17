@@ -18,7 +18,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: k8s-images-1.20.0-amd64.tar.gz
-          tag_name: k8s-1.20.0-amd64
+          files: kube-state-metrics-v2.15.0-amd64.tar.gz
+          tag_name: kube-state-metrics-v2.15.0-amd64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
