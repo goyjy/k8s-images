@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Save Docker Images
-        run: docker pull --platform amd64 registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.15.0 ;docker save -o kube-state-metrics-v2.15.0-amd64.tar.gz registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.15.0
+        run: docker pull --platform amd64 registry.k8s.io/build-image/go-runner:v2.3.1-go1.17.2-bullseye.0 ;docker save -o go-runner-v2.3.1-amd64.tar.gz registry.k8s.io/build-image/go-runner:v2.3.1-go1.17.2-bullseye.0
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          files: kube-state-metrics-v2.15.0-amd64.tar.gz
-          tag_name: kube-state-metrics-v2.15.0-amd64
+          files: go-runner-v2.3.1-amd64.tar.gz
+          tag_name: go-runner-v2.3.1-amd64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
